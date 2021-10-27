@@ -8,7 +8,7 @@ RSpec.describe Parser, type: :service do
     let(:radar_signal) { file_fixture('one_invader.txt').read }
 
     it 'returns its position' do
-      expect(Parser.new(radar_signal).identify_invaders).to eq [0, 0]
+      expect(Parser.new(radar_signal).identify_invaders).to eq [0, [0]]
     end
   end
 
@@ -16,7 +16,7 @@ RSpec.describe Parser, type: :service do
     let(:radar_signal) { file_fixture('one_invader_w_noise.txt').read }
 
     it 'returns its position' do
-      expect(Parser.new(radar_signal).identify_invaders).to eq  [0, 1]
+      expect(Parser.new(radar_signal).identify_invaders).to eq  [0, [1]]
     end
   end
 
@@ -24,7 +24,7 @@ RSpec.describe Parser, type: :service do
     let(:radar_signal) { file_fixture('one_invader_top.txt').read }
 
     it 'returns its position' do
-      expect(Parser.new(radar_signal).identify_invaders).to eq  [1, 0]
+      expect(Parser.new(radar_signal).identify_invaders).to eq  [1, [0]]
     end
   end
 
@@ -36,11 +36,11 @@ RSpec.describe Parser, type: :service do
     end
   end
 
-  xdescribe 'when there is a radar signal with two invaders in the same row and some noise around them' do
+  describe 'when there is a radar signal with two invaders in the same row and some noise around them' do
     let(:radar_signal) { file_fixture('two_invaders_one_row.txt').read }
 
     it 'returns its position' do
-      expect(Parser.new(radar_signal).identify_invaders).to eq  [[0, 0], [0, 17]]
+      expect(Parser.new(radar_signal).identify_invaders).to eq  [0, [0, 18]]
     end
   end
 
