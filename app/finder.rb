@@ -1,7 +1,7 @@
 require_relative 'invaders/mars_invader'
 require_relative 'invaders/jupiter_invader'
 
-class Parser
+class Finder
   KNOWN_INVADERS = [MarsInvader, JupiterInvader]
 
   attr_reader :invaders
