@@ -5,7 +5,7 @@ RSpec.describe Parser, type: :service do
   include_context("file_helper")
 
   describe 'when there is a radar signal with one invader' do
-    let(:radar_signal) { file_fixture('single_invader_signal.txt').read }
+    let(:radar_signal) { file_fixture('one_invader.txt').read }
 
     it 'returns its position' do
       expect(Parser.new(radar_signal).identify_invaders).to eq [0, 0]
@@ -13,7 +13,7 @@ RSpec.describe Parser, type: :service do
   end
 
   describe 'when there is a radar signal with one invader and some noise on the left' do
-    let(:radar_signal) { file_fixture('single_invader_signal_w_noise.txt').read }
+    let(:radar_signal) { file_fixture('one_invader_w_noise.txt').read }
 
     it 'returns its position' do
       expect(Parser.new(radar_signal).identify_invaders).to eq  [0, 1]
@@ -29,7 +29,7 @@ RSpec.describe Parser, type: :service do
   end
 
   describe 'when there is a radar signal with one invader with noise on the left but misaligned' do
-    let(:radar_signal) { file_fixture('single_invader_signal_one_row_misaligned.txt').read }
+    let(:radar_signal) { file_fixture('one_invader_one_row_misaligned.txt').read }
 
     it 'returns an empty array, nothing found' do
       expect(Parser.new(radar_signal).identify_invaders).to eq  []
