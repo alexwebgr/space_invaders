@@ -2,7 +2,7 @@
 ---o---o------o------o---o---
 --ooooooo----ooo----ooooooo--
 -oo-ooo-oo--oo-oo--oo-ooo-oo-
-oooooooooo-ooo-ooo-oooooooooo
+ooooooooooo-oo-oo-ooooooooooo
 o-ooooooo-o--ooo-oo-ooooooo-o
 o-o-----o-oo-o-o-oo-o-----o-o
 ---oo-oo------o------oo-oo---

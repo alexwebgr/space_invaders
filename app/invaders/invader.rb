@@ -15,19 +15,23 @@ class Invader
       face.each do |invader_line|
         count = (0...line.length).select { |i| line[i, invader_line.length] == invader_line }
         table << {
-          start_row: row,
-          column_check: count
+          row_index: row,
+          column_indexes: count
         } unless count.empty?
       end
 
       row += 1
     end
 
-    if table.map { |col| col[:column_check] }.uniq.size > 1
-      return []
+    positions = []
+    table.each_slice(face.size) do |slice|
+      columns = slice.map { |col| col[:column_indexes] }.uniq
+      if slice.size == face.size && columns.size == 1
+        positions << { row: slice.first[:row_index], columns: columns.first }
+      end
     end
 
-    [table.first[:start_row], table.map { |col| col[:column_check] }.uniq.first]
+    positions
   end
 
   public

@@ -8,7 +8,7 @@ RSpec.describe JupiterInvader, type: :service do
     let(:radar_signal) { file_fixture('jupiter/one_invader.txt').read }
 
     it 'returns its position' do
-      expect(described_class.new(radar_signal).identify).to eq [0, [0]]
+      expect(described_class.new(radar_signal).identify).to eq [{ :columns => [0], :row => 0 }]
     end
   end
 
@@ -16,7 +16,7 @@ RSpec.describe JupiterInvader, type: :service do
     let(:radar_signal) { file_fixture('jupiter/one_invader_w_noise.txt').read }
 
     it 'returns its position' do
-      expect(described_class.new(radar_signal).identify).to eq  [0, [1]]
+      expect(described_class.new(radar_signal).identify).to eq [{ :columns => [1], :row => 0 }]
     end
   end
 
@@ -24,31 +24,39 @@ RSpec.describe JupiterInvader, type: :service do
     let(:radar_signal) { file_fixture('jupiter/one_invader_top.txt').read }
 
     it 'returns its position' do
-      expect(described_class.new(radar_signal).identify).to eq  [1, [0]]
+      expect(described_class.new(radar_signal).identify).to eq [{ :columns => [0], :row => 1 }]
     end
   end
 
   describe 'when there is a radar signal with one invader with noise on the left but misaligned' do
-    let(:radar_signal) { file_fixture('jupiter/one_invader_one_row_misaligned.txt').read }
+    let(:radar_signal) { file_fixture('jupiter/one_invader_misaligned.txt').read }
 
     it 'returns an empty array, nothing found' do
-      expect(described_class.new(radar_signal).identify).to eq  []
+      expect(described_class.new(radar_signal).identify).to eq []
     end
   end
 
-  describe 'when there is a radar signal with two invaders in the same row and some noise around them' do
-    let(:radar_signal) { file_fixture('jupiter/two_invaders_one_row.txt').read }
+  describe 'when there is a radar signal with two invaders in the same row' do
+    let(:radar_signal) { file_fixture('jupiter/two_invaders_same_row.txt').read }
 
     it 'returns its position' do
-      expect(described_class.new(radar_signal).identify).to eq  [0, [0, 11]]
+      expect(described_class.new(radar_signal).identify).to eq [{ :columns => [0, 11], :row => 0 }]
     end
   end
 
-  xdescribe 'when there is a radar signal with two invaders in the same column and some noise around them' do
-    let(:radar_signal) { file_fixture('jupiter/two_invaders_w_noise.txt').read }
+  describe 'when there is a radar signal with two invaders in the same column' do
+    let(:radar_signal) { file_fixture('jupiter/two_invaders_w_noise_same_column.txt').read }
 
     it 'returns its position' do
-      expect(described_class.new(radar_signal).identify).to eq  [[0, 0], [9, 0]]
+      expect(described_class.new(radar_signal).identify).to eq [{ :columns => [0], :row => 0 }, { :columns => [0], :row => 10 }]
+    end
+  end
+
+  describe 'when there is a radar signal with two invaders in the same column and half invader at the bottom' do
+    let(:radar_signal) { file_fixture('jupiter/two_invaders_same_column_half_invader_bottom.txt').read }
+
+    it 'returns the position for the first two' do
+      expect(described_class.new(radar_signal).identify).to eq [{ :columns => [0], :row => 0 }, { :columns => [0], :row => 10 }]
     end
   end
 end
