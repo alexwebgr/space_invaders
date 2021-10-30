@@ -8,7 +8,7 @@ class Invader
     @radar_signal = radar_signal
   end
 
-  def find_positions_columns
+  def find_positions
     table = []
     row = 0
     radar_signal.each_line do |line|
@@ -37,6 +37,6 @@ class Invader
   public
 
   def identify
-    find_positions_columns
+    find_positions
   end
 end
