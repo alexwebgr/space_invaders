@@ -59,4 +59,28 @@ RSpec.describe MarsInvader, type: :service do
       expect(described_class.new(radar_signal).identify).to eq [{ :columns => [1], :row => 0 }, { :columns => [1], :row => 8 }]
     end
   end
+
+  describe 'when there is a radar signal with two invaders in the same column and half invader at the top' do
+    let(:radar_signal) { file_fixture('mars/two_invaders_same_column_half_invader_top.txt').read }
+
+    it 'returns the position for the first two' do
+      expect(described_class.new(radar_signal).identify).to eq [{ :columns => [0], :row => 5 }, { :columns => [0], :row => 13 }]
+    end
+  end
+
+  describe 'when there is a radar signal with two invaders in the same column and two invaders in the same row' do
+    let(:radar_signal) { file_fixture('mars/two_invaders_same_row_two_invaders_same_column.txt').read }
+
+    it 'returns the position for the first two' do
+      expect(described_class.new(radar_signal).identify).to eq [{ :columns => [0, 18], :row => 0 }, { :columns => [0, 18], :row => 8 }]
+    end
+  end
+
+  describe 'when there is a radar signal with two invaders in the same column and half invader in the middle' do
+    let(:radar_signal) { file_fixture('mars/two_invaders_same_column_half_invader_middle.txt').read }
+
+    it 'returns the position for the two' do
+      expect(described_class.new(radar_signal).identify).to eq [{ :columns => [0], :row => 0 }, { :columns => [0], :row => 11 }]
+    end
+  end
 end
