@@ -13,9 +13,8 @@ class Invader
 
     radar_signal.each_line.with_index do |line, index|
       face.each do |invader_line|
-        column_indexes = (0...line.length).select { |i| line[i, invader_line[1].length] == invader_line[1] }
+        column_indexes = (0...line.length).select { |i| line[i, invader_line.length] == invader_line }
         table << {
-          id: invader_line[0],
           row_index: index,
           column_indexes: column_indexes
         } unless column_indexes.empty?
