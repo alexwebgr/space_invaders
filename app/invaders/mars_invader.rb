@@ -1,15 +1,16 @@
 require_relative 'invader'
 
 class MarsInvader < Invader
-  FACE = '--o-----o--
----o---o---
---ooooooo--
--oo-ooo-oo-
-ooooooooooo
-o-ooooooo-o
-o-o-----o-o
----oo-oo---
-'.split("\n")
+  FACE = <<~EOS.split
+    --o-----o--
+    ---o---o---
+    --ooooooo--
+    -oo-ooo-oo-
+    ooooooooooo
+    o-ooooooo-o
+    o-o-----o-o
+    ---oo-oo---
+  EOS
 
   def initialize(radar_signal)
     super

@@ -3,6 +3,7 @@ require_relative 'invaders/jupiter_invader'
 
 class Finder
   KNOWN_INVADERS = [MarsInvader, JupiterInvader]
+  private_constant :KNOWN_INVADERS
 
   private
 
@@ -17,6 +18,6 @@ class Finder
   public
 
   def identify_invaders
-    invaders.each_with_object({}) { |invader, memo| memo[invader.name] = invader.new(radar_signal).identify }
+    invaders.each_with_object({}) { |invader, positions| positions[invader.name] = invader.new(radar_signal).identify }
   end
 end

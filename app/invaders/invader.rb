@@ -1,8 +1,8 @@
 class Invader
   private
 
-  attr_reader :radar_signal
   attr_reader :face
+  attr_reader :radar_signal
 
   def initialize(radar_signal)
     @radar_signal = radar_signal
