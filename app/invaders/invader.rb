@@ -13,11 +13,11 @@ class Invader
     row = 0
     radar_signal.each_line do |line|
       face.each do |invader_line|
-        count = (0...line.length).select { |i| line[i, invader_line.length] == invader_line }
+        column_indexes = (0...line.length).select { |i| line[i, invader_line.length] == invader_line }
         table << {
           row_index: row,
-          column_indexes: count
-        } unless count.empty?
+          column_indexes: column_indexes
+        } unless column_indexes.empty?
       end
 
       row += 1
