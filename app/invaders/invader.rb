@@ -10,21 +10,24 @@ class Invader
 
   def find_positions
     table = []
-    row = 0
-    radar_signal.each_line do |line|
+
+    radar_signal.each_line.with_index do |line, index|
       face.each do |invader_line|
-        column_indexes = (0...line.length).select { |i| line[i, invader_line.length] == invader_line }
+        column_indexes = (0...line.length).select { |i| line[i, invader_line[1].length] == invader_line[1] }
         table << {
-          row_index: row,
+          id: invader_line[0],
+          row_index: index,
           column_indexes: column_indexes
         } unless column_indexes.empty?
       end
-
-      row += 1
     end
 
+    table
+  end
+
+  def verify_positions
     positions = []
-    table.each_slice(face.size) do |slice|
+    find_positions.each_slice(face.size) do |slice|
       columns = slice.map { |col| col[:column_indexes] }.uniq
       if slice.size == face.size && columns.size == 1
         positions << { row: slice.first[:row_index], columns: columns.first }
@@ -37,6 +40,6 @@ class Invader
   public
 
   def identify
-    find_positions
+    verify_positions
   end
 end
