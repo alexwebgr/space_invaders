@@ -91,3 +91,32 @@ o-----oo-------------------o--o-----o-----------o------o-------o----o-----------
 o--oo------o-----oo--o-oo------------oo--o------o--o-------------oo----o------------oooo-o------oo--
 -----o----------ooooooooo--------------oo--------------oo-----o-----o-o--o------o----------o----o---
 ~~~~
+
+### Approach
+By scanning each line of the signal we try to identify invader positions by collecting column indexes, 
+then by compiling all the indexes together we check to see if they align assuming they all have the same index per row.
+
+Only whole invaders are returned as a hash with the name of the invader as the key and an array of hashes containing
+two keys, an array `:columns` which contains all the indexes for that row and `:row` the index of the row. The indexes 
+indicate the top left corner of the invader's face.
+
+The index is zero based which means that 0 is the first line. 
+```ruby
+{
+    "MarsInvader" => [{ :columns => [0], :row => 0 }],
+    "JupiterInvader" => [{ :columns => [0], :row => 9 }]
+}
+```
+
+If no invaders were found an empty array is returned instead
+```ruby
+{
+  "MarsInvader" => [], 
+  "JupiterInvader" => [] 
+}
+```
+
+### Installation locally 
+* Ensure you have ruby 3.0.0 install locally preferably by using a ruby version manager like rbenv
+* Run `bundle install` to install the dependencies
+* Run the tests with `bundle exec rake` or `bundle exec rspec`. A coverage report will also be generated under `coverage/index.html`.
