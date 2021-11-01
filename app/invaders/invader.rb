@@ -34,19 +34,14 @@ class Invader
   end
 
   def group_positions
-    find_positions.each_cons(face.keys.length).select { |key| key.map { |h| h[:id] } == face.keys }.flatten
+    find_positions.each_cons(face.keys.length).select { |key| key.map { |h| h[:id] } == face.keys }
   end
 
   def verify_positions
-    positions = []
-    group_positions.each_slice(face.size) do |slice|
+    group_positions.map do |slice|
       columns = slice.map { |col| col[:column_indexes] }.uniq
-      if columns.size == 1
-        positions << { row: slice.first[:row_index], columns: columns.first }
-      end
-    end
-
-    positions
+      { row: slice.first[:row_index], columns: columns.first } if columns.size == 1
+    end.compact
   end
 
   public
