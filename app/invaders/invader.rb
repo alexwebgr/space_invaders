@@ -8,12 +8,20 @@ class Invader
     @radar_signal = radar_signal
   end
 
+  def find_indexes(line, invader_line)
+    indexes = []
+
+    line.scan(/#{invader_line}/) { indexes << $~.offset(0)[0] }
+
+    indexes
+  end
+
   def find_positions
     table = []
 
     radar_signal.each_line.with_index do |line, index|
       face.each do |invader_line|
-        column_indexes = (0...line.length).select { |i| line[i, invader_line[1].length] == invader_line[1] }
+        column_indexes = find_indexes(line, invader_line[1])
         table << {
           id: invader_line[0],
           row_index: index,
@@ -26,7 +34,7 @@ class Invader
   end
 
   def group_positions
-    find_positions.each_cons(face.keys.length).select{|a| a.map {|h| h[:id]} == face.keys}.flatten
+    find_positions.each_cons(face.keys.length).select { |key| key.map { |h| h[:id] } == face.keys }.flatten
   end
 
   def verify_positions
