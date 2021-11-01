@@ -12,7 +12,7 @@ RSpec.describe MarsInvader, type: :service do
     end
   end
 
-  describe 'when there is a radar signal with one invader and some noise on the left' do
+  describe 'when there is a radar signal with one invader and noise on the left' do
     let(:radar_signal) { file_fixture('mars/one_invader_w_noise.txt').read }
 
     it 'returns its position' do
@@ -28,7 +28,7 @@ RSpec.describe MarsInvader, type: :service do
     end
   end
 
-  describe 'when there is a radar signal with one invader with noise on the left but misaligned' do
+  describe 'when there is a radar signal with one invader and noise on the left but misaligned' do
     let(:radar_signal) { file_fixture('mars/one_invader_misaligned.txt').read }
 
     it 'returns an empty array, nothing found' do

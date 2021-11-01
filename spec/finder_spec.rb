@@ -4,6 +4,36 @@ require_relative '../app/finder'
 RSpec.describe Finder, type: :service do
   include_context("file_helper")
 
+  describe 'checking JupiterInvader and MarsInvader' do
+    describe 'when there is a radar signal with one mars and one jupiter invader' do
+      let(:radar_signal) { file_fixture('one_mars_one_jupiter.txt').read }
+      let(:expected_output) { {
+        "MarsInvader" => [{ :columns => [0], :row => 0 }],
+        "JupiterInvader" => [{ :columns => [0], :row => 9 }]
+      } }
+
+      it 'returns its position' do
+        expect(described_class.new(radar_signal, [MarsInvader, JupiterInvader]).identify_invaders).to eq(expected_output)
+      end
+    end
+
+    describe 'when there is an unknown invader supplied' do
+      let(:radar_signal) { file_fixture('one_mars_one_jupiter.txt').read }
+
+      it 'raises an exception' do
+        expect { described_class.new(radar_signal, [UnknownInvader]).identify_invaders }.to raise_error NameError
+      end
+    end
+
+    describe 'when there is a radar signal with a lot of noise' do
+      let(:radar_signal) { file_fixture('valid_radar_signal.txt').read }
+
+      it 'returns its position' do
+        expect(described_class.new(radar_signal, [MarsInvader, JupiterInvader]).identify_invaders).to eq({ "MarsInvader" => [], "JupiterInvader" => [] })
+      end
+    end
+  end
+
   describe 'checking for MarsInvader' do
     describe 'when there is a radar signal with one invader' do
       let(:radar_signal) { file_fixture('mars/one_invader.txt').read }
@@ -13,7 +43,7 @@ RSpec.describe Finder, type: :service do
       end
     end
 
-    describe 'when there is a radar signal with one invader and some noise on the left' do
+    describe 'when there is a radar signal with one invader and noise on the left' do
       let(:radar_signal) { file_fixture('mars/one_invader_w_noise.txt').read }
 
       it 'returns its position' do
@@ -29,7 +59,7 @@ RSpec.describe Finder, type: :service do
       end
     end
 
-    describe 'when there is a radar signal with one invader with noise on the left but misaligned' do
+    describe 'when there is a radar signal with one invader and noise on the left but misaligned' do
       let(:radar_signal) { file_fixture('mars/one_invader_misaligned.txt').read }
 
       it 'returns an empty array, nothing found' do
@@ -42,14 +72,6 @@ RSpec.describe Finder, type: :service do
 
       it 'returns its position' do
         expect(described_class.new(radar_signal, [MarsInvader]).identify_invaders).to eq({ "MarsInvader" => [{ :columns => [0, 18], :row => 0 }] })
-      end
-    end
-
-    describe 'when there is a radar signal with a lot of noise' do
-      let(:radar_signal) { file_fixture('valid_radar_signal.txt').read }
-
-      it 'returns its position' do
-        expect(described_class.new(radar_signal, [MarsInvader]).identify_invaders).to eq({ 'MarsInvader' => [] })
       end
     end
 
@@ -103,7 +125,7 @@ RSpec.describe Finder, type: :service do
       end
     end
 
-    describe 'when there is a radar signal with one invader and some noise on the left' do
+    describe 'when there is a radar signal with one invader and noise on the left' do
       let(:radar_signal) { file_fixture('jupiter/one_invader_w_noise.txt').read }
 
       it 'returns its position' do
@@ -119,7 +141,7 @@ RSpec.describe Finder, type: :service do
       end
     end
 
-    describe 'when there is a radar signal with one invader with noise on the left but misaligned' do
+    describe 'when there is a radar signal with one invader and noise on the left but misaligned' do
       let(:radar_signal) { file_fixture('jupiter/one_invader_misaligned.txt').read }
 
       it 'returns an empty array, nothing found' do
