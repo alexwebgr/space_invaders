@@ -83,6 +83,14 @@ RSpec.describe Finder, type: :service do
       end
     end
 
+    describe 'when there is a radar signal with two invaders in the same column and two invaders in the same row' do
+      let(:radar_signal) { file_fixture('mars/two_invaders_same_row_two_invaders_same_column.txt').read }
+
+      it 'returns its position' do
+        expect(described_class.new(radar_signal, [MarsInvader]).identify_invaders).to eq({ "MarsInvader" => [{:columns=>[0, 18], :row=>0}, {:columns=>[0, 18], :row=>8}] })
+      end
+    end
+
     describe 'when there is a radar signal with two invaders in the same column and half invader at the bottom' do
       let(:radar_signal) { file_fixture('mars/two_invaders_same_column_half_invader_bottom.txt').read }
 
@@ -102,7 +110,7 @@ RSpec.describe Finder, type: :service do
     describe 'when there is a radar signal with two invaders in the same column and two invaders in the same row' do
       let(:radar_signal) { file_fixture('mars/two_invaders_same_row_two_invaders_same_column.txt').read }
 
-      it 'returns the position for the first two' do
+      it 'returns its position' do
         expect(described_class.new(radar_signal, [MarsInvader]).identify_invaders).to eq({ "MarsInvader" => [{ :columns => [0, 18], :row => 0 }, { :columns => [0, 18], :row => 8 }] })
       end
     end
@@ -165,6 +173,14 @@ RSpec.describe Finder, type: :service do
       end
     end
 
+    describe 'when there is a radar signal with two invaders in the same column and two invaders in the same row' do
+      let(:radar_signal) { file_fixture('jupiter/two_invaders_same_row_two_invaders_same_column.txt').read }
+
+      it 'returns its position' do
+        expect(described_class.new(radar_signal, [JupiterInvader]).identify_invaders).to eq({ "JupiterInvader" =>  [{ :columns => [0, 11], :row => 0 }, { :columns => [0, 11], :row => 8 }] })
+      end
+    end
+
     describe 'when there is a radar signal with two invaders in the same column and half invader at the bottom' do
       let(:radar_signal) { file_fixture('jupiter/two_invaders_same_column_half_invader_bottom.txt').read }
 
@@ -184,7 +200,7 @@ RSpec.describe Finder, type: :service do
     describe 'when there is a radar signal with two invaders in the same column and two invaders in the same row' do
       let(:radar_signal) { file_fixture('jupiter/two_invaders_same_row_two_invaders_same_column.txt').read }
 
-      it 'returns the position for the first two' do
+      it 'returns its position' do
         expect(described_class.new(radar_signal, [JupiterInvader]).identify_invaders).to eq({ "JupiterInvader" => [{ :columns => [0, 11], :row => 0 }, { :columns => [0, 11], :row => 8 }] })
       end
     end
