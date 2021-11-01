@@ -41,7 +41,7 @@ class Invader
     positions = []
     group_positions.each_slice(face.size) do |slice|
       columns = slice.map { |col| col[:column_indexes] }.uniq
-      if slice.size == face.size && columns.size == 1
+      if columns.size == 1
         positions << { row: slice.first[:row_index], columns: columns.first }
       end
     end
