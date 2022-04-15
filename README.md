@@ -7,15 +7,18 @@ Your Ruby application must take a radar sample as an argument and reveal possibl
 Good luck!
 
 ### Requirements:
+
 - No image detection, this is all about ASCII patterns
 - Good OOP architecture is a must. This is a perfect opportunity to demonstrate the SOLID design principle experience.
 - Fully tested code with RSpec
 
 ### Tips:
+
 - The noise in the radar can be either false positives or false negatives
 - Think of edge cases ... pun intended ;)
 
 ### Known invaders:
+
 ~~~~
 --o-----o--
 ---o---o---
@@ -39,6 +42,7 @@ o-o--o-o
 ~~~~
 
 ### Example radar sample:
+
 ~~~~
 ----o--oo----o--ooo--ooo--o------o---oo-o----oo---o--o---------o----o------o-------------o--o--o--o-
 --o-o-----oooooooo-oooooo---o---o----o------ooo-o---o--o----o------o--o---ooo-----o--oo-o------o----
@@ -93,14 +97,16 @@ o--oo------o-----oo--o-oo------------oo--o------o--o-------------oo----o--------
 ~~~~
 
 ### Approach
-By scanning each line of the signal we try to identify invader positions by collecting column indexes, 
+
+By scanning each line of the signal we try to identify invader positions by collecting column indexes,
 then by compiling all the indexes together we check to see if they align assuming they all have the same index per row.
 
 Only whole invaders are returned as a hash with the name of the invader as the key and an array of hashes containing
-two keys, an array `:columns` which contains all the indexes for that row and `:row` the index of the row. The indexes 
+two keys, an array `:columns` which contains all the indexes for that row and `:row` the index of the row. The indexes
 indicate the top left corner of the invader's face.
 
-The index is zero based which means that 0 is the first line. 
+The index is zero based which means that 0 is the first line.
+
 ```ruby
 {
     "MarsInvader" => [{ :columns => [0], :row => 0 }],
@@ -109,21 +115,25 @@ The index is zero based which means that 0 is the first line.
 ```
 
 If no invaders were found an empty array is returned instead
+
 ```ruby
 {
-  "MarsInvader" => [], 
-  "JupiterInvader" => [] 
+  "MarsInvader" => [],
+  "JupiterInvader" => []
 }
 ```
 
-### Installation locally 
+### Installation locally
+
 * Ensure you have ruby 3.0.0 install locally preferably by using a ruby version manager like rbenv
 * Run `bundle install` to install the dependencies
 * Run the tests with `bundle exec rake` or `bundle exec rspec`. A coverage report will also be generated under `/coverage/index.html`.
 
 ### Usage
-A rake task is supplied in order to find the invaders. It takes a single parameter `signal` which is the path to the 
+
+A rake task is supplied in order to find the invaders. It takes a single parameter `signal` which is the path to the
 signal file. Signal files can be found under `/app/signals` and the rake task under `/rakelib`
+
 ```ruby
 bundle exec rake space_invaders:identify[app/signals/one_mars_one_jupiter.txt]
 ```

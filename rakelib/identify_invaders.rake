@@ -8,6 +8,6 @@ namespace :space_invaders do
 
     radar_signal = Pathname.new(signal).read
 
-    pp Finder.new(radar_signal).identify_invaders
+    pp Finder.new(radar_signal).identify
   end
 end

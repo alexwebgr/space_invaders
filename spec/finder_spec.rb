@@ -13,7 +13,7 @@ RSpec.describe Finder, type: :service do
       } }
 
       it 'returns its position' do
-        expect(described_class.new(radar_signal, [MarsInvader, JupiterInvader]).identify_invaders).to eq(expected_output)
+        expect(described_class.new(radar_signal, [MarsInvader, JupiterInvader]).identify).to eq(expected_output)
       end
     end
 
@@ -21,7 +21,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('one_mars_one_jupiter.txt').read }
 
       it 'raises an exception' do
-        expect { described_class.new(radar_signal, [UnknownInvader]).identify_invaders }.to raise_error NameError
+        expect { described_class.new(radar_signal, [UnknownInvader]).identify }.to raise_error NameError
       end
     end
 
@@ -29,7 +29,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('valid_radar_signal.txt').read }
 
       it 'returns its position' do
-        expect(described_class.new(radar_signal, [MarsInvader, JupiterInvader]).identify_invaders).to eq({ "MarsInvader" => [], "JupiterInvader" => [] })
+        expect(described_class.new(radar_signal, [MarsInvader, JupiterInvader]).identify).to eq({ "MarsInvader" => [], "JupiterInvader" => [] })
       end
     end
   end
@@ -39,7 +39,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('mars/one_invader.txt').read }
 
       it 'returns its position' do
-        expect(described_class.new(radar_signal, [MarsInvader]).identify_invaders).to eq({ "MarsInvader" => [{ :columns => [0], :row => 0 }] })
+        expect(described_class.new(radar_signal, [MarsInvader]).identify).to eq({ "MarsInvader" => [{ :columns => [0], :row => 0 }] })
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('mars/one_invader_w_noise.txt').read }
 
       it 'returns its position' do
-        expect(described_class.new(radar_signal, [MarsInvader]).identify_invaders).to eq({ "MarsInvader" => [{ :columns => [1], :row => 0 }] })
+        expect(described_class.new(radar_signal, [MarsInvader]).identify).to eq({ "MarsInvader" => [{ :columns => [1], :row => 0 }] })
       end
     end
 
@@ -55,7 +55,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('mars/one_invader_top.txt').read }
 
       it 'returns its position' do
-        expect(described_class.new(radar_signal, [MarsInvader]).identify_invaders).to eq({ "MarsInvader" => [{ :columns => [0], :row => 1 }] })
+        expect(described_class.new(radar_signal, [MarsInvader]).identify).to eq({ "MarsInvader" => [{ :columns => [0], :row => 1 }] })
       end
     end
 
@@ -63,7 +63,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('mars/one_invader_misaligned.txt').read }
 
       it 'returns an empty array, nothing found' do
-        expect(described_class.new(radar_signal, [MarsInvader]).identify_invaders).to eq({ 'MarsInvader' => [] })
+        expect(described_class.new(radar_signal, [MarsInvader]).identify).to eq({ 'MarsInvader' => [] })
       end
     end
 
@@ -71,7 +71,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('mars/two_invaders_same_row.txt').read }
 
       it 'returns its position' do
-        expect(described_class.new(radar_signal, [MarsInvader]).identify_invaders).to eq({ "MarsInvader" => [{ :columns => [0, 18], :row => 0 }] })
+        expect(described_class.new(radar_signal, [MarsInvader]).identify).to eq({ "MarsInvader" => [{ :columns => [0, 18], :row => 0 }] })
       end
     end
 
@@ -79,7 +79,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('mars/two_invaders_w_noise_same_column.txt').read }
 
       it 'returns its position' do
-        expect(described_class.new(radar_signal, [MarsInvader]).identify_invaders).to eq({ "MarsInvader" => [{ :columns => [1], :row => 0 }, { :columns => [1], :row => 8 }] })
+        expect(described_class.new(radar_signal, [MarsInvader]).identify).to eq({ "MarsInvader" => [{ :columns => [1], :row => 0 }, { :columns => [1], :row => 8 }] })
       end
     end
 
@@ -87,7 +87,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('mars/two_invaders_same_row_two_invaders_same_column.txt').read }
 
       it 'returns its position' do
-        expect(described_class.new(radar_signal, [MarsInvader]).identify_invaders).to eq({ "MarsInvader" => [{:columns=>[0, 18], :row=>0}, {:columns=>[0, 18], :row=>8}] })
+        expect(described_class.new(radar_signal, [MarsInvader]).identify).to eq({ "MarsInvader" => [{:columns=>[0, 18], :row=>0}, {:columns=>[0, 18], :row=>8}] })
       end
     end
 
@@ -95,7 +95,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('mars/two_invaders_same_column_half_invader_bottom.txt').read }
 
       it 'returns the position for the first two' do
-        expect(described_class.new(radar_signal, [MarsInvader]).identify_invaders).to eq({ "MarsInvader" => [{ :columns => [1], :row => 0 }, { :columns => [1], :row => 8 }] })
+        expect(described_class.new(radar_signal, [MarsInvader]).identify).to eq({ "MarsInvader" => [{ :columns => [1], :row => 0 }, { :columns => [1], :row => 8 }] })
       end
     end
 
@@ -103,7 +103,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('mars/two_invaders_same_column_half_invader_top.txt').read }
 
       it 'returns the position for the first two' do
-        expect(described_class.new(radar_signal, [MarsInvader]).identify_invaders).to eq({ "MarsInvader" => [{ :columns => [0], :row => 5 }, { :columns => [0], :row => 13 }] })
+        expect(described_class.new(radar_signal, [MarsInvader]).identify).to eq({ "MarsInvader" => [{ :columns => [0], :row => 5 }, { :columns => [0], :row => 13 }] })
       end
     end
 
@@ -111,7 +111,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('mars/two_invaders_same_row_two_invaders_same_column.txt').read }
 
       it 'returns its position' do
-        expect(described_class.new(radar_signal, [MarsInvader]).identify_invaders).to eq({ "MarsInvader" => [{ :columns => [0, 18], :row => 0 }, { :columns => [0, 18], :row => 8 }] })
+        expect(described_class.new(radar_signal, [MarsInvader]).identify).to eq({ "MarsInvader" => [{ :columns => [0, 18], :row => 0 }, { :columns => [0, 18], :row => 8 }] })
       end
     end
 
@@ -119,7 +119,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('mars/two_invaders_same_column_half_invader_middle.txt').read }
 
       it 'returns the position for the two' do
-        expect(described_class.new(radar_signal, [MarsInvader]).identify_invaders).to eq({ "MarsInvader" => [{ :columns => [0], :row => 0 }, { :columns => [0], :row => 11 }] })
+        expect(described_class.new(radar_signal, [MarsInvader]).identify).to eq({ "MarsInvader" => [{ :columns => [0], :row => 0 }, { :columns => [0], :row => 11 }] })
       end
     end
   end
@@ -129,7 +129,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('jupiter/one_invader.txt').read }
 
       it 'returns its position' do
-        expect(described_class.new(radar_signal, [JupiterInvader]).identify_invaders).to eq({ "JupiterInvader" => [{ :columns => [0], :row => 0 }] })
+        expect(described_class.new(radar_signal, [JupiterInvader]).identify).to eq({ "JupiterInvader" => [{ :columns => [0], :row => 0 }] })
       end
     end
 
@@ -137,7 +137,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('jupiter/one_invader_w_noise.txt').read }
 
       it 'returns its position' do
-        expect(described_class.new(radar_signal, [JupiterInvader]).identify_invaders).to eq({ "JupiterInvader" => [{ :columns => [1], :row => 0 }] })
+        expect(described_class.new(radar_signal, [JupiterInvader]).identify).to eq({ "JupiterInvader" => [{ :columns => [1], :row => 0 }] })
       end
     end
 
@@ -145,7 +145,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('jupiter/one_invader_top.txt').read }
 
       it 'returns its position' do
-        expect(described_class.new(radar_signal, [JupiterInvader]).identify_invaders).to eq({ "JupiterInvader" => [{ :columns => [0], :row => 1 }] })
+        expect(described_class.new(radar_signal, [JupiterInvader]).identify).to eq({ "JupiterInvader" => [{ :columns => [0], :row => 1 }] })
       end
     end
 
@@ -153,7 +153,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('jupiter/one_invader_misaligned.txt').read }
 
       it 'returns an empty array, nothing found' do
-        expect(described_class.new(radar_signal, [JupiterInvader]).identify_invaders).to eq({ "JupiterInvader" => [] })
+        expect(described_class.new(radar_signal, [JupiterInvader]).identify).to eq({ "JupiterInvader" => [] })
       end
     end
 
@@ -161,7 +161,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('jupiter/two_invaders_same_row.txt').read }
 
       it 'returns its position' do
-        expect(described_class.new(radar_signal, [JupiterInvader]).identify_invaders).to eq({ "JupiterInvader" => [{ :columns => [0, 11], :row => 0 }] })
+        expect(described_class.new(radar_signal, [JupiterInvader]).identify).to eq({ "JupiterInvader" => [{ :columns => [0, 11], :row => 0 }] })
       end
     end
 
@@ -169,7 +169,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('jupiter/two_invaders_w_noise_same_column.txt').read }
 
       it 'returns its position' do
-        expect(described_class.new(radar_signal, [JupiterInvader]).identify_invaders).to eq({ "JupiterInvader" => [{ :columns => [0], :row => 0 }, { :columns => [0], :row => 10 }] })
+        expect(described_class.new(radar_signal, [JupiterInvader]).identify).to eq({ "JupiterInvader" => [{ :columns => [0], :row => 0 }, { :columns => [0], :row => 10 }] })
       end
     end
 
@@ -177,7 +177,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('jupiter/two_invaders_same_row_two_invaders_same_column.txt').read }
 
       it 'returns its position' do
-        expect(described_class.new(radar_signal, [JupiterInvader]).identify_invaders).to eq({ "JupiterInvader" =>  [{ :columns => [0, 11], :row => 0 }, { :columns => [0, 11], :row => 8 }] })
+        expect(described_class.new(radar_signal, [JupiterInvader]).identify).to eq({ "JupiterInvader" =>  [{ :columns => [0, 11], :row => 0 }, { :columns => [0, 11], :row => 8 }] })
       end
     end
 
@@ -185,7 +185,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('jupiter/two_invaders_same_column_half_invader_bottom.txt').read }
 
       it 'returns the position for the first two' do
-        expect(described_class.new(radar_signal, [JupiterInvader]).identify_invaders).to eq({ "JupiterInvader" => [{ :columns => [0], :row => 0 }, { :columns => [0], :row => 10 }] })
+        expect(described_class.new(radar_signal, [JupiterInvader]).identify).to eq({ "JupiterInvader" => [{ :columns => [0], :row => 0 }, { :columns => [0], :row => 10 }] })
       end
     end
 
@@ -193,7 +193,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('jupiter/two_invaders_same_column_half_invader_top.txt').read }
 
       it 'returns the position for the first two' do
-        expect(described_class.new(radar_signal, [JupiterInvader]).identify_invaders).to eq({ "JupiterInvader" => [{ :columns => [0], :row => 4 }, { :columns => [0], :row => 14 }] })
+        expect(described_class.new(radar_signal, [JupiterInvader]).identify).to eq({ "JupiterInvader" => [{ :columns => [0], :row => 4 }, { :columns => [0], :row => 14 }] })
       end
     end
 
@@ -201,7 +201,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('jupiter/two_invaders_same_row_two_invaders_same_column.txt').read }
 
       it 'returns its position' do
-        expect(described_class.new(radar_signal, [JupiterInvader]).identify_invaders).to eq({ "JupiterInvader" => [{ :columns => [0, 11], :row => 0 }, { :columns => [0, 11], :row => 8 }] })
+        expect(described_class.new(radar_signal, [JupiterInvader]).identify).to eq({ "JupiterInvader" => [{ :columns => [0, 11], :row => 0 }, { :columns => [0, 11], :row => 8 }] })
       end
     end
 
@@ -209,7 +209,7 @@ RSpec.describe Finder, type: :service do
       let(:radar_signal) { file_fixture('jupiter/two_invaders_same_column_half_invader_middle.txt').read }
 
       it 'returns the position for the two' do
-        expect(described_class.new(radar_signal, [JupiterInvader]).identify_invaders).to eq({ "JupiterInvader" => [{ :columns => [0], :row => 0 }, { :columns => [0], :row => 14 }] })
+        expect(described_class.new(radar_signal, [JupiterInvader]).identify).to eq({ "JupiterInvader" => [{ :columns => [0], :row => 0 }, { :columns => [0], :row => 14 }] })
       end
     end
   end
