@@ -36,3 +36,5 @@ jobs:
 #        github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Coveralls GitHub Action
       uses: coverallsapp/github-action@v2.2.3
+      with:
+        parallel: true
