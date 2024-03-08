@@ -17,11 +17,7 @@ jobs:
   test:
 
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        test_number:
-          - 1
-          - 2
+
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby
@@ -38,20 +34,5 @@ jobs:
 #      uses: joshmfrankel/simplecov-check-action@1.0.0
 #      with:
 #        github_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Test ${{ matrix.test_number }}
-      run: make test-coverage-${{ matrix.test_number }}
-    - name: Coveralls Parallel
-      uses: coverallsapp/github-action@v2
-      with:
-        flag-name: run-${{ join(matrix.*, '-') }}
-        parallel: true
-  finish:
-    needs: test
-    if: ${{ always() }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Coveralls Finished
-        uses: coverallsapp/github-action@v2
-        with:
-          parallel-finished: true
-          carryforward: "run-1,run-2"
+    - name: Coveralls GitHub Action
+      uses: coverallsapp/github-action@v2.2.3
