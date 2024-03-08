@@ -16,4 +16,8 @@ class JupiterInvader < Invader
     super
     @face = FACE
   end
+
+  def say_hi
+    p "hello"
+  end
 end
