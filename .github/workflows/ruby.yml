@@ -34,5 +34,5 @@ jobs:
       uses: joshmfrankel/simplecov-check-action@1.0.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-  
-      
+    - name: Coveralls GitHub Action
+      uses: coverallsapp/github-action@v2.2.3
