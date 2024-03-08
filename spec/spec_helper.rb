@@ -12,11 +12,11 @@
 # the additional setup, and require it from the spec files that actually need
 # it.
 #
-require 'simplecov'
-SimpleCov.start do
-  add_filter "/spec/"
-  enable_coverage :branch
-end
+# require 'simplecov'
+# SimpleCov.start do
+#   add_filter "/spec/"
+#   enable_coverage :branch
+# end
 require 'support/file_helper'
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
