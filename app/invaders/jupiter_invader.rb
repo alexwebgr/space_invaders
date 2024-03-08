@@ -20,4 +20,8 @@ class JupiterInvader < Invader
   def say_hi
     p "hello"
   end
+
+  def say_hi_again
+    p "hello"
+  end
 end
