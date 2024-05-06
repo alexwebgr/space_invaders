@@ -31,11 +31,7 @@ jobs:
     - name: Run tests
       run: bundle exec rake
 
-    - name: Save Coverage report
-      run: |
-        mkdir -p ./cc
-        cp /home/runner/work/space_invaders/space_invaders/coverage/.resultset.json ./cc/coverage.json
     - uses: actions/upload-artifact@v4
       with:
         name: coverager
-        path: cc/
+        path: coverage/
