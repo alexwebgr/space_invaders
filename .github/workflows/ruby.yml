@@ -46,7 +46,7 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           let fs = require('fs');
-          let issue_number = Number(fs.readFileSync('./pr_number'));
+          let issue_number = Number(fs.readFileSync('./coverage.json'));
           await github.rest.issues.createComment({
             owner: context.repo.owner,
             repo: context.repo.repo,
