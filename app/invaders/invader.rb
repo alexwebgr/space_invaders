@@ -1,7 +1,6 @@
 class Invader
   private
 
-  # a comment
   attr_reader :face
   attr_reader :radar_signal
 
