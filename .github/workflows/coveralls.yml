@@ -1,7 +1,7 @@
 name: Coveralls
 on:
   workflow_run:
-#    workflows: ["Ruby"]
+    workflows: [Ruby]
     types: [completed]
 
 jobs:
