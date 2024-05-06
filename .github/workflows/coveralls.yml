@@ -67,10 +67,12 @@ jobs:
             let fs = require('fs');
             let issue_number = Number(fs.readFileSync('./pr_number'));
             let result_set = fs.readFileSync('./.last_run.json');
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: issue_number,
-              body: `Thank you for the PR! ${result_set}`
-            });
+            if (issue_number > 0) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue_number,
+                body: `Thank you for the PR! ${result_set}`
+              });
+            }
 
